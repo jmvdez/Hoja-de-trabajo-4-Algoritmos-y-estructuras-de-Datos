@@ -11,8 +11,8 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         Node<T> newNode = new Node<>(item);
 
         if (head != null) {
-            head.prev = newNode;
-            newNode.next = head;
+            head.setPreviousNode(newNode);
+            newNode.setNextNode(head);
         }
 
         head = newNode;
@@ -25,11 +25,11 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
             throw new RuntimeException("Lista vacía");
         }
 
-        T value = head.data;
-        head = head.next;
+        T value = head.getData();
+        head = head.getNextNode();
 
         if (head != null) {
-            head.prev = null;
+            head.setPreviousNode(null);
         }
 
         size--;
@@ -41,6 +41,6 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         if (isEmpty()) {
             throw new RuntimeException("Lista vacía");
         }
-        return head.data;
+        return head.getData();
     }
 }

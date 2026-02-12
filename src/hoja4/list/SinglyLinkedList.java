@@ -1,5 +1,5 @@
 package hoja4.list;
-
+import hoja4.model.Node;
 public class SinglyLinkedList<T> extends AbstractList<T> {
 
     private Node<T> head;
@@ -7,7 +7,7 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
     @Override
     public void addFirst(T item) {
         Node<T> newNode = new Node<>(item);
-        newNode.next = head;
+        newNode.setNextNode(head);
         head = newNode;
         size++;
     }
@@ -18,8 +18,8 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
             throw new RuntimeException("Lista vacía");
         }
 
-        T value = head.data;
-        head = head.next;
+        T value = head.getData();
+        head = head.getNextNode();
         size--;
         return value;
     }
@@ -29,6 +29,6 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
         if (isEmpty()) {
             throw new RuntimeException("Lista vacía");
         }
-        return head.data;
+        return head.getData();
     }
 }
