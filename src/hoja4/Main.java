@@ -1,5 +1,7 @@
 package hoja4;
 
+import hoja4.calculator.InfixToPostfixConverter;
+import hoja4.calculator.PostfixEvaluator;
 import hoja4.stack.*;
 
 import java.io.BufferedReader;
@@ -42,9 +44,9 @@ public class Main {
                 scanner.nextLine();
 
                 if (listOption == 1) {
-                    listType = "singly";
+                    listType = "Encadenado simple";
                 } else if (listOption == 2) {
-                    listType = "doubly";
+                    listType = "Encadenado doble";
                 } else {
                     System.out.println("Opción inválida");
                     return;
@@ -59,7 +61,7 @@ public class Main {
         // Crear stack usando Factory
         Stack<String> stack = StackFactory.getStack(stackType, listType);
 
-        // Leer expresión desde archivo
+         // Leer expresión desde archivo
         String expression = readExpressionFromFile("datos.txt");
 
         if (expression == null) {
@@ -69,15 +71,41 @@ public class Main {
 
         System.out.println("Expresión leída: " + expression);
 
-        // Por ahora solo probamos que el stack funciona
-        stack.push("Prueba");
-        System.out.println("Elemento en tope del stack: " + stack.peek());
+        // ===============================
+        // CONVERSIÓN INFIX → POSTFIX
+        // ===============================
+
+        Stack<String> conversionStack =
+                StackFactory.getStack(stackType, listType);
+
+        InfixToPostfixConverter converter =
+                new InfixToPostfixConverter(conversionStack);
+
+        String postfix = converter.convert(expression);
+
+        System.out.println("Postfix: " + postfix);
+
+        // ===============================
+        // 2️⃣ EVALUACIÓN POSTFIX
+        // ===============================
+
+        Stack<Double> evaluationStack =
+                StackFactory.getStack(stackType, listType);
+
+        PostfixEvaluator evaluator =
+                new PostfixEvaluator(evaluationStack);
+
+        double result = evaluator.evaluate(postfix);
+
+        System.out.println("Resultado final: " + result);
     }
 
     private static String readExpressionFromFile(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
             return br.readLine();
         } catch (IOException e) {
+            System.out.println("Directorio actual: " + System.getProperty("user.dir"));
             e.printStackTrace();
             return null;
         }
