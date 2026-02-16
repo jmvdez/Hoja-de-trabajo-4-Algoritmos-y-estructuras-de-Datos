@@ -13,7 +13,11 @@ public class InfixToPostfixConverter {
 
         StringBuilder output = new StringBuilder();
         // Los tokens son los posibles operadores, caracteres o parentesis
-        String[] tokens = expression.split("(?<=[-+/()])|(?=[-+/()])");
+       String[] tokens = expression.replaceAll("(?<=\\d)(?=[^\\d\\s])", " ")
+                             .replaceAll("(?<=[^\\d\\s])(?=\\d)", " ")
+                             .replaceAll("(?<=[+\\-*/%()])(?=[+\\-*/%()])", " ")
+                             .trim()
+                             .split("\\s+");
         
         for (String token : tokens) {
 

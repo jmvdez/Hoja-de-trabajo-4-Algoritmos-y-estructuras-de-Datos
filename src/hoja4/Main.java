@@ -62,7 +62,7 @@ public class Main {
         Stack<String> stack = StackFactory.getStack(stackType, listType);
 
          // Leer expresión desde archivo
-        String expression = readExpressionFromFile("datos.txt");
+        String expression = readExpressionFromFile("datos.txt", stackType, listType);
 
         if (expression == null) {
             System.out.println("No se pudo leer la expresión.");
@@ -100,14 +100,23 @@ public class Main {
         System.out.println("Resultado final: " + result);
     }
 
-    private static String readExpressionFromFile(String fileName) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            return br.readLine();
+    private static String readExpressionFromFile(String fileName, String stackType, String listType) {
+        try (BufferedReader br = new BufferedReader(new FileReader("datos.txt"))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                return line;
+            }
+
         } catch (IOException e) {
+            System.out.println("No se pudo leer el archivo datos.txt");
             System.out.println("Directorio actual: " + System.getProperty("user.dir"));
             e.printStackTrace();
-            return null;
         }
+        
+        return null;
     }
 }
