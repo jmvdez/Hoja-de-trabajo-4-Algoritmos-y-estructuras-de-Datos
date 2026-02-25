@@ -1,10 +1,15 @@
-package hoja4.stack;
+package hoja4.Stack;
 
-import hoja4.list.*;
+import hoja4.list.List;
+import hoja4.list.ListFactory;
 
 public class StackFactory {
 
     public static <T> Stack<T> getStack(String stackType, String listType) {
+
+        if (stackType == null) {
+            throw new IllegalArgumentException("Debe especificar el tipo de stack.");
+        }
 
         switch (stackType.toLowerCase()) {
 
@@ -15,22 +20,11 @@ public class StackFactory {
                 return new StackVector<>();
 
             case "list":
-
-                if (listType == null) {
-                    throw new IllegalArgumentException("Debe especificar tipo de lista");
-                }
-
-                switch (listType.toLowerCase()) {
-                    case "singly":
-                        return new StackList<>(new SinglyLinkedList<>());
-                    case "doubly":
-                        return new StackList<>(new DoublyLinkedList<>());
-                    default:
-                        throw new IllegalArgumentException("Tipo de lista inválido");
-                }
+                List<T> list = ListFactory.getList(listType);
+                return new StackList<>(list);
 
             default:
-                throw new IllegalArgumentException("Tipo de stack inválido");
+                throw new IllegalArgumentException("Tipo de stack inválido.");
         }
     }
 }
