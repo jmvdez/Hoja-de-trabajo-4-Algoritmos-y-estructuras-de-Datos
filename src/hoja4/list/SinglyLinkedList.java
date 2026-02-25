@@ -1,5 +1,7 @@
 package hoja4.list;
+
 import hoja4.model.Node;
+
 public class SinglyLinkedList<T> extends AbstractList<T> {
 
     private Node<T> head;
@@ -29,6 +31,7 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
         if (isEmpty()) {
             throw new RuntimeException("Lista vacía");
         }
+
         return head.getData();
     }
 }

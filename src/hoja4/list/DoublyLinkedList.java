@@ -41,6 +41,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         if (isEmpty()) {
             throw new RuntimeException("Lista vacía");
         }
+
         return head.getData();
     }
 }

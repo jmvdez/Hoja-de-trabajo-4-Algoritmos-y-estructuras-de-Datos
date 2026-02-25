@@ -1,4 +1,4 @@
-package hoja4.Lista;
+package hoja4.list;
 
 public class ListFactory {
 

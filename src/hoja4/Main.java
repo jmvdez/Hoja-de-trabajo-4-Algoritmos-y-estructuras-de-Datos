@@ -3,7 +3,6 @@ package hoja4;
 import hoja4.calculator.InfixToPostfixConverter;
 import hoja4.calculator.PostfixEvaluator;
 import hoja4.stack.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,9 +29,11 @@ public class Main {
             case 1:
                 stackType = "arraylist";
                 break;
+
             case 2:
                 stackType = "vector";
                 break;
+
             case 3:
                 stackType = "list";
 
@@ -44,9 +45,9 @@ public class Main {
                 scanner.nextLine();
 
                 if (listOption == 1) {
-                    listType = "Encadenado simple";
+                    listType = "singly";
                 } else if (listOption == 2) {
-                    listType = "Encadenado doble";
+                    listType = "doubly";
                 } else {
                     System.out.println("Opción inválida");
                     return;
@@ -61,8 +62,8 @@ public class Main {
         // Crear stack usando Factory
         Stack<String> stack = StackFactory.getStack(stackType, listType);
 
-         // Leer expresión desde archivo
-        String expression = readExpressionFromFile("datos.txt", stackType, listType);
+        // Leer expresión desde archivo
+        String expression = readExpressionFromFile("datos.txt");
 
         if (expression == null) {
             System.out.println("No se pudo leer la expresión.");
@@ -86,7 +87,7 @@ public class Main {
         System.out.println("Postfix: " + postfix);
 
         // ===============================
-        // 2️⃣ EVALUACIÓN POSTFIX
+        // EVALUACIÓN POSTFIX
         // ===============================
 
         Stack<Double> evaluationStack =
@@ -100,23 +101,14 @@ public class Main {
         System.out.println("Resultado final: " + result);
     }
 
-    private static String readExpressionFromFile(String fileName, String stackType, String listType) {
-        try (BufferedReader br = new BufferedReader(new FileReader("datos.txt"))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty()) continue;
-
-                return line;
-            }
-
+    private static String readExpressionFromFile(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            return br.readLine();
         } catch (IOException e) {
             System.out.println("No se pudo leer el archivo datos.txt");
             System.out.println("Directorio actual: " + System.getProperty("user.dir"));
             e.printStackTrace();
+            return null;
         }
-        
-        return null;
     }
 }

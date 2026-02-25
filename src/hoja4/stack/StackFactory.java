@@ -1,4 +1,4 @@
-package hoja4.Stack;
+package hoja4.stack;
 
 import hoja4.list.List;
 import hoja4.list.ListFactory;
